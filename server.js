@@ -15,13 +15,18 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                        }))
 
                         app.get('/', (req, res) => {
-                        res.sendFile(__dirname + '/index.html')
+                            db.collection('quotes').find().toArray()
+                            .then(results => {
+                                console.log(results);
+                            })
+                            .catch(error => console.error(error))
+                            //res.sendFile(__dirname + '/index.html')
                         })
 
                        app.post('/quotes' , (req, res) => {
                         quotesCollection.insertOne(req.body)
                         .then(result => {
-                            console.log(result)
+                            res.redirect('/')
                         })
                         .catch(error =>
                             console.error(error))
