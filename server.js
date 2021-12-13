@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
-app.set('view engine', 'ejs')
+
 
 MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', 
                    {useUnifiedTopology: true})
@@ -11,7 +11,7 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                        const db = client.db('star-wars-quotes')
                        const quotesCollection = db.collection('quotes')
                        
-                       
+                       app.set('view engine', 'ejs')
                        app.use(bodyParser.urlencoded({
                         extended: true
                        }))
@@ -23,7 +23,7 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                                 console.log(results);
                             })
                             .catch(error => console.error(error))
-                            //res.render('index.ejs', {})
+                            res.render('index.ejs', {})
                             //res.sendFile(__dirname + '/index.html')
                         })
                        
