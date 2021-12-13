@@ -2,6 +2,28 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
+const req = require('express/lib/request');
+const { response } = require('express');
+
+function isInArray(item) {
+   var arr = [];
+   if (arr.includes(item)) {
+       return true;
+   }
+   else {
+       return console.log(`This index doesn't exists`)
+   }
+}
+
+function isNameRight(obj = [{name: nameExample}]) {
+    if (nameExample === req.body.name) {
+        return true;
+    }
+    else {
+        return response.status(400).json("Error 400 - Bad Request")
+    }
+}
+
 
 MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', 
                    {useUnifiedTopology: true})
@@ -10,9 +32,8 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                        const db = client.db('star-wars-quotes')
                        const quotesCollection = db.collection('quotes')
                        
-                        // ========================
                         // Middlewares
-                        // ========================
+                        // -----------
                        app.set('view engine', 'ejs')
                        app.use(bodyParser.urlencoded({
                         extended: true
@@ -21,7 +42,10 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                        app.use(bodyParser.json())
                        app.use(express.static('public'))
 
-                        //app.set('view engine', 'ejs')
+                       // Routes
+                       // -----------
+
+                        //Rota de listagem única de acordo com a posição no array de quotes.
                         app.get('/', (req, res) => {
                             db.collection('quotes').find().toArray()
                             .then(results => {
