@@ -60,6 +60,19 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                              .catch(error => console.error(error))    
                         })
 
+                        app.delete('/quotes', (req, res) => {
+                            quotesCollection.deleteOne(
+                                { name: req.body.name },
+                              )
+                              .then(result => {
+                                  if (result.deletedCount === 0) {
+                                      return res.json('No quote to delete')
+                                  }
+                                  res.json(`Deleted Darth Vadar's quote`)
+                              })
+                              .catch(error => console.error(error))
+                        })
+
                        app.listen(3000, ()=> console.log('listening on 3000'))
                    })
                    .catch(console.error)
