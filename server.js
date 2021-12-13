@@ -20,11 +20,9 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                         app.get('/', (req, res) => {
                             db.collection('quotes').find().toArray()
                             .then(results => {
-                                console.log(results);
+                                res.render('index.ejs', { quotes: results })
                             })
                             .catch(error => console.error(error))
-                            res.render('index.ejs', {})
-                            //res.sendFile(__dirname + '/index.html')
                         })
                        
                        app.set('view engine', 'ejs')
