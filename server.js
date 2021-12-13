@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
+app.set('view engine', 'ejs')
 
 MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', 
                    {useUnifiedTopology: true})
@@ -10,19 +11,23 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                        const db = client.db('star-wars-quotes')
                        const quotesCollection = db.collection('quotes')
                        
+                       
                        app.use(bodyParser.urlencoded({
                         extended: true
                        }))
 
+                        app.set('view engine', 'ejs')
                         app.get('/', (req, res) => {
                             db.collection('quotes').find().toArray()
                             .then(results => {
                                 console.log(results);
                             })
                             .catch(error => console.error(error))
+                            //res.render('index.ejs', {})
                             //res.sendFile(__dirname + '/index.html')
                         })
-
+                       
+                       app.set('view engine', 'ejs')
                        app.post('/quotes' , (req, res) => {
                         quotesCollection.insertOne(req.body)
                         .then(result => {
@@ -35,22 +40,4 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
                        app.listen(3000, ()=> console.log('listening on 3000'))
                    })
                    .catch(console.error)
-
-/*                  
-app.use(bodyParser.urlencoded({
-    extended: true
-}))
-
-app.listen(3000, ()=> console.log('listening on 3000'));
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
-})
-
-app.post('/quotes' , (req, res) => {
-    console.log(req.body);
-})
-
-*/
-
 
