@@ -42,7 +42,22 @@ MongoClient.connect('mongodb+srv://yoda:star123@cluster0.bdy0h.mongodb.net/myFir
 
                         //app.set('view engine', 'ejs')
                         app.put('/quotes', (req, res) => {
-                            console.log(req.body)
+                            quotesCollection.findOneAndUpdate(
+                                { name: 'Yoda' },
+                                {
+                                  $set: {
+                                    name: req.body.name,
+                                    quote: req.body.quote
+                                  }
+                                },
+                                {
+                                  upsert: true
+                                }
+                              )
+                             .then(result => {
+                                res.json('Success')
+                             })
+                             .catch(error => console.error(error))    
                         })
 
                        app.listen(3000, ()=> console.log('listening on 3000'))
