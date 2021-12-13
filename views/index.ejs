@@ -18,16 +18,24 @@
     <h2> Quotes </h2>
 
     <ul class="quotes">
-    <!-- Loop through quotes -->
-    <% for(var i = 0; i < quotes.length; i++) {%>
-    <li class="quote">
-      <!-- Output name from the iterated quote object -->
-      <span><%= quotes[i].name %></span>:
-      <!-- Output quote from the iterated quote object -->
-      <span><%= quotes[i].quote %></span>
-    </li>
-    <% } %>
+        <!-- Loop through quotes -->
+        <% for(var i = 0; i < quotes.length; i++) {%>
+        <li class="quote">
+        <!-- Output name from the iterated quote object -->
+            <span><%= quotes[i].name %></span>:
+            <!-- Output quote from the iterated quote object -->
+            <span><%= quotes[i].quote %></span>
+        </li>
+        <% } %>
     </ul>
+
+    <div>
+        <h2>Darth Vadar invades!</h2>
+        <p> Replace first Yoda's quote with a quote written by Darth Vadar </p>
+        <button id="update-button">Replace Yoda's quote</button>
+    </div>
+
+    <script src="../public/main.js"></script>
 
 </body>
 </html>
